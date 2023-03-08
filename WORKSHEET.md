@@ -8,7 +8,9 @@ This is the worksheet for Homework 1. Your deliverables for this homework are:
 - [ ] Kaggle submission and writeup (details below)
 - [ ] Github repo with all of your code! You need to either fork it or just copy the code over to your repo. A simple way of doing this is provided below. Include the link to your repo below. If you would like to make the repo private, please dm us and we'll send you the GitHub usernames to add as collaborators.
 
-`YOUR GITHUB REPO HERE (or notice that you DMed us to share a private repo)`
+`YOUR GITHUB REPO HERE `
+
+https://github.com/deleontony/MLAB-sp23-nmep-hw1
 
 ## To move to your own repo:
 
@@ -28,15 +30,14 @@ Feel free to ask your NMEP friends if you don't know!
 
 ## -1.0 What is the difference between `torch.nn.Module` and `torch.nn.functional`?
 
-`YOUR ANSWER HERE`
-
+nn.Module defines network architecture like Layers and connections while funtion provides functions such as ReLU and Sigmoid
 ## -1.1 What is the difference between a Dataset and a DataLoader?
 
-`YOUR ANSWER HERE`
+Datasets store data and their labels while DataLoaders are an iterable which iterates over the Dataset.
 
 ## -1.2 What does `@torch.no_grad()` above a function header do?
 
-`YOUR ANSWER HERE`
+@torch.no_grad() is a decorator of the below function, meaning the function essentially becomes torch.no_grad(function(input)). torch.no_grad() specifically sets the requires_grad field of new tensors to False to save computation
 
 
 
@@ -44,21 +45,21 @@ Feel free to ask your NMEP friends if you don't know!
 
 Read through `README.md` and follow the steps to understand how the repo is structured.
 
-## 0.0 What are the `build.py` files? Why do we have them?**
+## 0.0 What are the `build.py` files? Why do we have them?
 
-`YOUR ANSWER HERE`
+The build.py files construct the necessary structures for their respective parts; for example the build.py in models constructs the appropriate model, the build.py in data obtains the correct dataset and makes the correct data loaders, etc. They allow use to go straight from raw data or type of model to the desired objects.
 
 ## 0.1 Where would you define a new model?
 
-`YOUR ANSWER HERE`
+You would make a new class file in the models folder as well as modify the build.py in models so that it correctly intiallizes your new model. You would also likely need to make a new config file for that model.
 
 ## 0.2 How would you add support for a new dataset? What files would you need to change?
 
-`YOUR ANSWER HERE`
+You would add another class to the datasets.py file with the desired dataset as well as modify the build.py file in data so that it properly initializes the new dataset.
 
 ## 0.3 Where is the actual training code?
 
-`YOUR ANSWER HERE`
+The training code is found in the main.py file, it has the main, train_one_epoch, validate, and evaluate methods.
 
 ## 0.4 Create a diagram explaining the structure of `main.py` and the entire code repo.
 
@@ -76,37 +77,37 @@ The following questions relate to `data/build.py` and `data/datasets.py`.
 
 ### 1.0.0 What does `build_loader` do?
 
-`YOUR ANSWER HERE`
+build_loader is in the build.py file in the data directory. It takes in a config .yaml file and sets up modified pytorch DataSets and DataLoaders for training, validating, and testing for the appropriate, desired dataset. 
 
 ### 1.0.1 What functions do you need to implement for a PyTorch Datset? (hint there are 3)
 
-`YOUR ANSWER HERE`
+(Other than \_\_init__), \_\_getitem__, \_\_len__, and _get_transforms are the three required functions
 
 ## 1.1 CIFAR10Dataset
 
 ### 1.1.0 Go through the constructor. What field actually contains the data? Do we need to download it ahead of time?
 
-`YOUR ANSWER HERE`
+"self.dataset = CIFAR(root="/data/cifar10", train=self.train, download=True)" on line 105 is where the data is actually contained. According to documentation (https://pytorch.org/vision/main/generated/torchvision.datasets.CIFAR10.html), "download (bool, optional) – If true, downloads the dataset from the internet and puts it in root directory. If dataset is already downloaded, it is not downloaded again." implies that the data does not need to be downloaded ahead of time since it comes from the internet.
 
 ### 1.1.1 What is `self.train`? What is `self.transform`?
 
-`YOUR ANSWER HERE`
+self.train is a boolean value which defaults to True which specifies where the dataset is used for training, and self.size in an int which defaults to 32 which indicates the image size. They are used in _get_transforms to decide how the image should be transformed according to torchvision.transforms.
 
 ### 1.1.2 What does `__getitem__` do? What is `index`?
 
-`YOUR ANSWER HERE`
+\_\_getitem__ first takes the item in the data set at index, then transforms it according to _get_transforms, and returns a tuple of (transformed_image, label).
 
 ### 1.1.3 What does `__len__` do?
 
-`YOUR ANSWER HERE`
+It returns the length of the dataset
 
 ### 1.1.4 What does `self._get_transforms` do? Why is there an if statement?
 
-`YOUR ANSWER HERE`
+_get_transforms sets up a chain of transformations to the image using the torchvision.transforms as well as torchvision.transforms.Compose. There is an if statement because it transforms the image differently based on whether or not it is training data. If it is training data, it first adds some randomness to the image using ColorJitter and RandomHorizontalFlip. For both training data and other data, it then converts the image into a tensor, normalizes it to some specific means and standard deviations, and doubles the image size.
 
 ### 1.1.5 What does `transforms.Normalize` do? What do the parameters mean? (hint: take a look here: https://pytorch.org/vision/main/generated/torchvision.transforms.Normalize.html)
 
-`YOUR ANSWER HERE`
+transforms.Normalize normalizes a tensor image using a given set of means and standard deviations. It takes num_channels * 2 inputs since each channel needs a specified mean and std.
 
 ## 1.2 MediumImagenetHDF5Dataset
 
