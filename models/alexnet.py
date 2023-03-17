@@ -39,4 +39,3 @@ class AlexNet(nn.Module):
         x = torch.flatten(x, 1)
         out = self.lin(x)
         return out
-        
