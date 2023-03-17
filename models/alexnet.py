@@ -1,7 +1,6 @@
 import torch
 from torch import nn
 
-
 class AlexNet(nn.Module):
     """Fake LeNet with 32x32 color images and 200 classes"""
 

@@ -207,7 +207,7 @@ Linear with num_classes output units
 AlexNet parameters: 
 LeNet Parameters:
 
-They both take memory while trainig
+They both take _____ memory while trainig
 
 ## 4.2 Train AlexNet on CIFAR10. What accuracy do you get?
 
