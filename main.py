@@ -8,11 +8,11 @@ import time
 import numpy as np
 import torch
 import torch.nn as nn
+from fvcore.nn import FlopCountAnalysis, flop_count_str
 from timm.utils import AverageMeter, accuracy
 from torch.optim.lr_scheduler import CosineAnnealingLR
 from torch.utils.data import Dataset  # For custom datasets
 from tqdm import tqdm
-from fvcore.nn import FlopCountAnalysis, flop_count_str
 
 from config import get_config
 from data import build_loader
@@ -20,12 +20,15 @@ from models import build_model
 from optimizer import build_optimizer
 from utils import create_logger, load_checkpoint, save_checkpoint
 
+# CUDA_VISIBLE_DEVICES=0 python main.py --cfg=configs/alexnet_base.yaml
 
 def parse_option():
     parser = argparse.ArgumentParser("Vision model training and evaluation script", add_help=False)
     parser.add_argument("--cfg", type=str, required=True, metavar="FILE", help="path to config file")
     parser.add_argument("--opts", help="Modify config options by adding 'KEY VALUE' pairs.", default=None, nargs="+")
 
+    # save code
+    parser.add_argument("--save", type=int, help="save as csv", default=0)
     # easy config modification
     parser.add_argument("--batch-size", type=int, help="batch size for single GPU")
     parser.add_argument("--data-path", type=str, help="path to dataset")
@@ -213,27 +216,40 @@ def evaluate(config, data_loader, model):
     preds = np.concatenate(preds)
     return preds
 
-
 if __name__ == "__main__":
     args, config = parse_option()
+    if vars(args)["save"] != 0:
+            import numpy as np
+            import pandas as pd
 
-    seed = config.SEED
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    np.random.seed(seed)
-    # random.seed(seed)
+            PATH = 'output/resnet18/preds.npy'
 
-    # Make output dir
-    os.makedirs(config.OUTPUT, exist_ok=True)
-    logger = create_logger(output_dir=config.OUTPUT, name=f"{config.MODEL.NAME}")
+            data = np.load(PATH)
+            data = np.argmax(data, axis=1)
 
-    path = os.path.join(config.OUTPUT, "config.yaml")
-    with open(path, "w") as f:
-        f.write(config.dump())
-    logger.info(f"Full config saved to {path}")
+            df = pd.DataFrame(data)
+            df.index += 1
+            df.to_csv('submission.csv', header=['Category'], index_label='Id')
+    else:
+        args, config = parse_option()
 
-    # print config
-    logger.info(config.dump())
-    logger.info(json.dumps(vars(args)))
+        seed = config.SEED
+        torch.manual_seed(seed)
+        torch.cuda.manual_seed(seed)
+        np.random.seed(seed)
+        # random.seed(seed)
 
-    main(config)
+        # Make output dir
+        os.makedirs(config.OUTPUT, exist_ok=True)
+        logger = create_logger(output_dir=config.OUTPUT, name=f"{config.MODEL.NAME}")
+
+        path = os.path.join(config.OUTPUT, "config.yaml")
+        with open(path, "w") as f:
+            f.write(config.dump())
+        logger.info(f"Full config saved to {path}")
+
+        # print config
+        logger.info(config.dump())
+        logger.info(json.dumps(vars(args)))
+
+        main(config)

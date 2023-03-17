@@ -8,9 +8,7 @@ This is the worksheet for Homework 1. Your deliverables for this homework are:
 - [ ] Kaggle submission and writeup (details below)
 - [ ] Github repo with all of your code! You need to either fork it or just copy the code over to your repo. A simple way of doing this is provided below. Include the link to your repo below. If you would like to make the repo private, please dm us and we'll send you the GitHub usernames to add as collaborators.
 
-`YOUR GITHUB REPO HERE `
-
-https://github.com/deleontony/MLAB-sp23-nmep-hw1
+`https://github.com/deleontony/MLAB-sp23-nmep-hw1`
 
 ## To move to your own repo:
 
@@ -30,14 +28,15 @@ Feel free to ask your NMEP friends if you don't know!
 
 ## -1.0 What is the difference between `torch.nn.Module` and `torch.nn.functional`?
 
-nn.Module defines network architecture like Layers and connections while funtion provides functions such as ReLU and Sigmoid
+`torch.nn.Module are Python classses which define Module classes. torch.nn.functional uses a stateless approach. nn.Module uses network architectures like layers and connections and functions provide functions like Relu.`
+
 ## -1.1 What is the difference between a Dataset and a DataLoader?
 
-Datasets store data and their labels while DataLoaders are an iterable which iterates over the Dataset.
+`A Dataset will store samples and also the labels associated with the samples. DataLoaders will wrap our dataset objects and batch our data for us.`
 
 ## -1.2 What does `@torch.no_grad()` above a function header do?
 
-@torch.no_grad() is a decorator of the below function, meaning the function essentially becomes torch.no_grad(function(input)). torch.no_grad() specifically sets the requires_grad field of new tensors to False to save computation
+`@torch.no_grad() above a function header is a decorator that makes sure a graph isn't built when we don't want to compute any gradients. This saves us some computation.`
 
 
 
@@ -45,27 +44,27 @@ Datasets store data and their labels while DataLoaders are an iterable which ite
 
 Read through `README.md` and follow the steps to understand how the repo is structured.
 
-## 0.0 What are the `build.py` files? Why do we have them?
+## 0.0 What are the `build.py` files? Why do we have them?**
 
-The build.py files construct the necessary structures for their respective parts; for example the build.py in models constructs the appropriate model, the build.py in data obtains the correct dataset and makes the correct data loaders, etc. They allow use to go straight from raw data or type of model to the desired objects.
+`The build.py files are used to build the model and data loaders using the configs. We usually handle all parameters in the build files. They allow us to write code free of any config dependencies`
 
 ## 0.1 Where would you define a new model?
 
-You would make a new class file in the models folder as well as modify the build.py in models so that it correctly intiallizes your new model. You would also likely need to make a new config file for that model.
+`You would define a new model in the models folder and also modify the build.py in models. You might also have to make a new config.`
 
 ## 0.2 How would you add support for a new dataset? What files would you need to change?
 
-You would add another class to the datasets.py file with the desired dataset as well as modify the build.py file in data so that it properly initializes the new dataset.
+`You can add support for a new dataset in the data folder under datasets.py. This is where dataset loaders are defined. You would also modify the config file`
 
 ## 0.3 Where is the actual training code?
 
-The training code is found in the main.py file, it has the main, train_one_epoch, validate, and evaluate methods.
+`The actual training code is in main.py. This contains the main training loop.`
 
 ## 0.4 Create a diagram explaining the structure of `main.py` and the entire code repo.
 
-Be sure to include the 4 main functions in it (`train`, `train_one_epoch`, `validate`, `evaluate`) and how they interact with each other. Also explain where the other files are used. No need to dive too deep into any part of the code for now, the following parts will do deeper dives into each part of the code. For now, read the code just enough to understand how the pieces come together, not necessarily the specifics. You can use any tool to create the diagram (e.g. just explain it in nice markdown, draw it on paper and take a picture, use draw.io, excalidraw, etc.)
+Be sure to include the 4 main functions in it (`main`, `train_one_epoch`, `validate`, `evaluate`) and how they interact with each other. Also explain where the other files are used. No need to dive too deep into any part of the code for now, the following parts will do deeper dives into each part of the code. For now, read the code just enough to understand how the pieces come together, not necessarily the specifics. You can use any tool to create the diagram (e.g. just explain it in nice markdown, draw it on paper and take a picture, use draw.io, excalidraw, etc.)
 
-`YOUR ANSWER HERE`
+https://docs.google.com/presentation/d/1wPU1kUYGKkNNqx_FRUC4Uom-WtxJkIAEZXCVe-FaHG4/edit?usp=sharing
 
 
 
@@ -77,53 +76,51 @@ The following questions relate to `data/build.py` and `data/datasets.py`.
 
 ### 1.0.0 What does `build_loader` do?
 
-build_loader is in the build.py file in the data directory. It takes in a config .yaml file and sets up modified pytorch DataSets and DataLoaders for training, validating, and testing for the appropriate, desired dataset. 
+`build_loader begins by checking the dataset type. It assigns dataset_train, dataset_val, and dataset_test certain values depending on the type of dataset it is. Afterwards, it create three dataLoader objects using the DataLoader class. These are data_loader_train, data_loader_val, and data_loader_test. It sets up a modified pyTorch Datasets and Dataloaders.`
 
 ### 1.0.1 What functions do you need to implement for a PyTorch Datset? (hint there are 3)
 
-(Other than \_\_init__), \_\_getitem__, \_\_len__, and _get_transforms are the three required functions
+`The functions you need to implement a PyTorch Dataset are __getitem__, __len__, and _get_transforms`
 
 ## 1.1 CIFAR10Dataset
 
 ### 1.1.0 Go through the constructor. What field actually contains the data? Do we need to download it ahead of time?
 
-"self.dataset = CIFAR(root="/data/cifar10", train=self.train, download=True)" on line 105 is where the data is actually contained. According to documentation (https://pytorch.org/vision/main/generated/torchvision.datasets.CIFAR10.html), "download (bool, optional) – If true, downloads the dataset from the internet and puts it in root directory. If dataset is already downloaded, it is not downloaded again." implies that the data does not need to be downloaded ahead of time since it comes from the internet.
+`The field that actually contains the data is self.dataset. We don't need to download it ahead of time because the dataset will download from the internet if the download boolean is set to true. `
 
 ### 1.1.1 What is `self.train`? What is `self.transform`?
 
-self.train is a boolean value which defaults to True which specifies where the dataset is used for training, and self.size in an int which defaults to 32 which indicates the image size. They are used in _get_transforms to decide how the image should be transformed according to torchvision.transforms.
+`self.train is a boolean value that decides where the dataset is used for training. If this is the case, colorJitter and RandomHorizontalFlip is added to the transform. This is defaultly set to True. self.transform gets the transforms and is what is the image is set to.`
 
 ### 1.1.2 What does `__getitem__` do? What is `index`?
-
-\_\_getitem__ first takes the item in the data set at index, then transforms it according to _get_transforms, and returns a tuple of (transformed_image, label).
+`__getitem__ first takes the item in the data set at index, then transforms it according to _get_transforms, and returns a tuple of (transformed_image, label).`
 
 ### 1.1.3 What does `__len__` do?
 
-It returns the length of the dataset
+`It returns the length of the dataset.`
 
 ### 1.1.4 What does `self._get_transforms` do? Why is there an if statement?
-
-_get_transforms sets up a chain of transformations to the image using the torchvision.transforms as well as torchvision.transforms.Compose. There is an if statement because it transforms the image differently based on whether or not it is training data. If it is training data, it first adds some randomness to the image using ColorJitter and RandomHorizontalFlip. For both training data and other data, it then converts the image into a tensor, normalizes it to some specific means and standard deviations, and doubles the image size.
+`_get_transforms sets up a chain of transformations to the image using the torchvision.transforms as well as torchvision.transforms.Compose. There is an if statement because it transforms the image differently based on whether or not it is training data. If it is training data, it first adds some randomness to the image using ColorJitter and RandomHorizontalFlip. For both training data and other data, it then converts the image into a tensor, normalizes it to some specific means and standard deviations, and doubles the image size.`
 
 ### 1.1.5 What does `transforms.Normalize` do? What do the parameters mean? (hint: take a look here: https://pytorch.org/vision/main/generated/torchvision.transforms.Normalize.html)
 
-transforms.Normalize normalizes a tensor image using a given set of means and standard deviations. It takes num_channels * 2 inputs since each channel needs a specified mean and std.
+`transforms.Normalize normalizes a tensor given a mean and standard deviation. Because each channel needs a specific mean and standard deviation, the number of inputs it takes in are num_channels*2.`
 
 ## 1.2 MediumImagenetHDF5Dataset
 
 ### 1.2.0 Go through the constructor. What field actually contains the data? Where is the data actually stored on honeydew? What other files are stored in that folder on honeydew? How large are they?
 
-`YOUR ANSWER HERE`
+`The field that contains the data is the filepath. The filepath is str = "/data/medium-imagenet/medium-imagenet-nmep-96.hdf5". This means that is stored in the data folder under medium-imagenet as an hdf5 file. An HDF5 is a data model, and file format for managing data. finish....`
 
 > *Some background*: HDF5 is a file format that stores data in a hierarchical structure. It is similar to a python dictionary. The files are binary and are generally really efficient to use. Additionally, `h5py.File()` does not actually read the entire file contents into memory. Instead, it only reads the data when you access it (as in `__getitem__`). You can learn more about [hdf5 here](https://portal.hdfgroup.org/display/HDF5/HDF5) and [h5py here](https://www.h5py.org/).
 
 ### 1.2.1 How is `_get_transforms` different from the one in CIFAR10Dataset?
 
-`YOUR ANSWER HERE`
+`self._get_transforms creates an array of transformations to the image. It then appends a normalization and a resizing to the tensor that is created. The the split value is "train" and if self.augment is set to true, a horizontal flip and color jitter will also be applied to transforms. Finally, the transforms are composed.`
 
 ### 1.2.2 How is `__getitem__` different from the one in CIFAR10Dataset? How many data splits do we have now? Is it different from CIFAR10? Do we have labels/annotations for the test set?
 
-`YOUR ANSWER HERE`
+`__getitem__ is different than the one in the CIFAR10Dataset because now we are using data splits. The image is taken from the file and we use an if statement to check if the split is "test". If it isn't there is a split, and if it is, then the label gets changed to a value of -1. The annotation for the test set is "test". Similar to CIFAR, a tuple  of image, label is returned.`
 
 ### 1.2.3 Visualizing the dataset
 
@@ -140,11 +137,11 @@ The following questions relate to `models/build.py` and `models/models.py`.
 
 ## What models are implemented for you?
 
-`YOUR ANSWER HERE`
+`The models that are implemented are lenet and resnet18.`
 
 ## What do PyTorch models inherit from? What functions do we need to implement for a PyTorch Model? (hint there are 2)
 
-`YOUR ANSWER HERE`
+`PyTorch models inherit from nn.Module. We need to implement __init__ and forward. `
 
 ## How many layers does our implementation of LeNet have? How many parameters does it have? (hint: to count the number of parameters, you might want to run the code)
 
@@ -158,11 +155,20 @@ The following questions relate to `main.py`, and the configs in `configs/`.
 
 ## 3.0 What configs have we provided for you? What models and datasets do they train on?
 
-`YOUR ANSWER HERE`
+The provided configs are "lenet_base.yaml", "resnet18_base.yaml", and "resnet18_medium_imagenet.yaml". They train on the cifar10, cifar10, and medium_imagenet data sets respectively.
 
 ## 3.1 Open `main.py` and go through `main()`. In bullet points, explain what the function does.
 
-`YOUR ANSWER HERE`
+1. config file -->  3 datasets (dataset_ train/val/test) + 3 data loaders (data_loader_ train/val/test)
+2. sets up correct device
+3. counts parameters and flops and logs them in the millions
+4. defines optimizer and loss function 
+5. If the model has already started training (MODEL.RESUME = True), it checks the validation accuracy. Then , if the model is in eval_mode it ends the program
+6. Starts a timer and the training loop for each epoch from start to total epochs. In each epoch it:
+* it calls train_one_epoch --> train_acc1 and train_loss and logs it
+*  calls validate --> val_acc1 and val_loss and logs it
+* saves if the 
+
 
 ## 3.2 Go through `validate()` and `evaluate()`. What do they do? How are they different? 
 > Could we have done better by reusing code? Yes. Yes we could have but we didn't... sorry...
@@ -198,7 +204,10 @@ Linear with num_classes output units
 ## 4.1 How many parameters does AlexNet have? How does it compare to LeNet? With the same batch size, how much memory do LeNet and AlexNet take up while training? 
 > (hint: use `gpuststat`)
 
-`YOUR ANSWER HERE`
+AlexNet parameters: 
+LeNet Parameters:
+
+They both take memory while trainig
 
 ## 4.2 Train AlexNet on CIFAR10. What accuracy do you get?
 
@@ -260,9 +269,9 @@ In `models/models.py`, we provided some skelly/guiding comments to implement Res
 
 ## 6.1 Visualize examples
 
-Visualize a couple of the predictions on the validation set (20 or so). Be sure to include the ground truth label and the predicted label. You can use `wandb.log()` to log images or also just save them to disc any way you think is easy.
+Visualize a couple of the predictions on the validation set (20 or so). Be sure to include the ground truth label and the predicted label. You can use `wandb.log()` to log images or also just save them to disc any way you think is easy. 
 
-`YOUR ANSWER HERE`
+`YOUR ANSWER HERE
 
 
 # Part 7: Kaggle submission
