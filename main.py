@@ -4,6 +4,7 @@ import json
 import os
 import shutil
 import time
+import wandb
 
 import numpy as np
 import torch
@@ -88,13 +89,24 @@ def main(config):
             return
 
     logger.info("Start training")
+
+    wandb.init(
+        project = "my-awesome-project",
+        config={
+        "learning_rate": 0.0003,
+        "architecture": "alexnet",
+        "dataset": "CIFAR-100",
+        "epochs": 50}
+        )
+
+
     start_time = time.time()
     for epoch in range(config.TRAIN.START_EPOCH, config.TRAIN.EPOCHS):
         train_acc1, train_loss = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
         logger.info(f" * Train Acc {train_acc1:.3f} Train Loss {train_loss:.3f}")
         logger.info(f"Accuracy of the network on the {len(dataset_train)} train images: {train_acc1:.1f}%")
-
-        # train_acc1, _ = validate(config, data_loader_train, model)
+        
+        #train_acc1, _ = validate(config, data_loader_train, model)
         val_acc1, val_loss = validate(config, data_loader_val, model)
         logger.info(f" * Val Acc {val_acc1:.3f} Val Loss {val_loss:.3f}")
         logger.info(f"Accuracy of the network on the {len(dataset_val)} val images: {val_acc1:.1f}%")
@@ -109,6 +121,8 @@ def main(config):
         log_stats = {"epoch": epoch, "n_params": n_parameters, "n_flops": n_flops,
                      "train_acc": train_acc1, "train_loss": train_loss, 
                      "val_acc": val_acc1, "val_loss": val_loss}
+        wandb.log({'train accuracy': train_acc1, 'train loss': train_loss, 'val accuracy': val_acc1, 'val loss': val_loss})
+
         with open(
                 os.path.join(config.OUTPUT, "metrics.json"), mode="a", encoding="utf-8"
             ) as f:

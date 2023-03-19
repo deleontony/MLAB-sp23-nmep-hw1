@@ -1,0 +1,9 @@
+
+<wandb.sdk.wandb_run.Run object at 0x7f2e4ad73fd0>
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'train_acc' is not defined
+  File "<stdin>", line 1
+    Cwandb.log({'accuracy': 0.9, 'loss': 0.5})wandb.log({'accuracy': 0.9, 'loss': 0.5})wandb.log({'accuracy': 0.9, 'loss': 0.5})wandb.log({'accuracy': 0.9, 'loss': 0.5})dfdsfdssdfdsdfsdsfdfsfd
+                                              ^^^^^
+SyntaxError: invalid syntax
