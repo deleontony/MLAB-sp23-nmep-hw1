@@ -331,6 +331,9 @@ link: https://wandb.ai/nmep-proj-1/my-awesome-project/runs/wunzgn2o
 
 MEDIUM IMAGENEY KAGGLE RUN1:https://wandb.ai/nmep-proj-1/my-awesome-project/runs/z9rl4ebk
 
+https://wandb.ai/nmep-proj-1/my-awesome-project/runs/xg6vvl7g
+
+
 ## 6.1 Visualize examples
 
 Visualize a couple of the predictions on the validation set (20 or so). Be sure to include the ground truth label and the predicted label. You can use `wandb.log()` to log images or also just save them to disc any way you think is easy. 

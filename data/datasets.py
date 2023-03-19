@@ -123,7 +123,7 @@ class CIFAR10Dataset(Dataset):
                 transforms.Resize([self.img_size] * 2),
                 # new augmentations for question 5.5:
                 transforms.GaussianBlur(kernel_size = (3, 3), sigma = (0.1, 5)),
-                transforms.RandomPerspective(distortion_scale = 0.3, p = 0.5)
+                #transforms.RandomPerspective(distortion_scale = 0.3, p = 0.5)
                 # other tranformation 5.5:
                 #transforms.RandomRotation(degrees=(0, 180))
             ]
