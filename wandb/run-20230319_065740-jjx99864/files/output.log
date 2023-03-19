@@ -1,0 +1,31 @@
+
+Traceback (most recent call last):
+  File "/home/tonydeleon/sp23-nmep-hw1/main.py", line 269, in <module>
+    main(config)
+  File "/home/tonydeleon/sp23-nmep-hw1/main.py", line 105, in main
+    train_acc1, train_loss = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
+  File "/home/tonydeleon/sp23-nmep-hw1/main.py", line 156, in train_one_epoch
+    outputs = model(samples)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/tonydeleon/sp23-nmep-hw1/models/resnet.py", line 99, in forward
+    x = self.layer1(x)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/container.py", line 139, in forward
+    input = module(input)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/tonydeleon/sp23-nmep-hw1/models/resnet.py", line 65, in forward
+    output = self.conv(x)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/container.py", line 139, in forward
+    input = module(input)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/batchnorm.py", line 168, in forward
+    return F.batch_norm(
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/functional.py", line 2438, in batch_norm
+    return torch.batch_norm(
+RuntimeError: CUDA out of memory. Tried to allocate 1024.00 MiB (GPU 0; 10.76 GiB total capacity; 9.09 GiB already allocated; 627.81 MiB free; 9.11 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF

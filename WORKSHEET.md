@@ -261,16 +261,59 @@ wandb:       val loss 0.96188
 
 ## 5.3 Do the same with batch size, keeping learning rate and everything else fixed. Ideally the batch size should be a power of 2, but try some odd batch sizes as well. What do you observe? Record training times and loss/accuracy plots for each batch size (should be easy with W&B). Try at least 4 different batch sizes.
 
-`YOUR ANSWER HERE`
+
+`batch size: 64 link:` https://wandb.ai/nmep-proj-1/my-awesome-project/runs/ry5w6ti1
+
+`batch size: 128 link:` https://wandb.ai/nmep-proj-1/my-awesome-project/runs/vqq9rlf9
+
+`batch size: 256 link:` https://wandb.ai/nmep-proj-1/my-awesome-project/runs/vt7xodxl
+
+`batch size: 512 link:` https://wandb.ai/nmep-proj-1/my-awesome-project/runs/dopn0nt9
+
+`batch size: 1024 link:` https://wandb.ai/nmep-proj-1/my-awesome-project/runs/77uz4uoj
+
+`batch size: 2048 link:` https://wandb.ai/nmep-proj-1/my-awesome-project/runs/jxinr8jg
+
+`
 
 ## 5.4 As a followup to the previous question, we're going to explore the effect of batch size on _throughput_, which is the number of images/sec that our model can process. You can find this by taking the batch size and dividing by the time per epoch. Plot the throughput for batch sizes of powers of 2, i.e. 1, 2, 4, ..., until you reach CUDA OOM. What is the largest batch size you can support? What trends do you observe, and why might this be the case?
 You only need to observe the training for ~ 5 epochs to average out the noise in training times; don't train to completion for this question! We're only asking about the time taken. If you're curious for a more in-depth explanation, feel free to read [this intro](https://horace.io/brrr_intro.html). 
 
-`YOUR ANSWER HERE`
+
+`batch size: 1024 link:` https://wandb.ai/nmep-proj-1/my-awesome-project/runs/77uz4uoj
+* `total time = 0:54`
+* `throughput: 94.81`
+
+`batch size: 2048 link:` https://wandb.ai/nmep-proj-1/my-awesome-project/runs/jxinr8jg
+* `total time = 0:55`
+* `throughput: 186.18`
+
+`batch size: 4096 link:` https://wandb.ai/nmep-proj-1/my-awesome-project/runs/wrc02s43
+* `total time = 1:06`
+* `throughput: 310.30`
+
+`batch size: 8192 link:` https://wandb.ai/nmep-proj-1/my-awesome-project/runs/s9aany9z
+* `total time = 1:25`
+* `throughput: 481.88`
+
+`batch size: 16384 link:` https://wandb.ai/nmep-proj-1/my-awesome-project/runs/8v208ky9
+* `total time = 1:58 `
+* `throughput: 694.23`
+
+`batch size: 32768 -->` RuntimeError: CUDA out of memory. Tried to allocate 1.12 GiB (GPU 0; 10.76 GiB total capacity; 9.42 GiB already allocated; 21.81 MiB free; 9.72 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+
+`as the batch size goes up, the throughput increases but so does time per epoch. Each time we increase batch size we double it, however our time does not double. This means that, despite doubling the number of images we process per epoch the time taken does not double and thus we are able to process more images per epoch.`
+
 
 ## 5.5 Try different data augmentations. Take a look [here](https://pytorch.org/vision/stable/transforms.html) for torchvision augmentations. Try at least 2 new augmentation schemes. Record loss/accuracy curves and best accuracies on validation/train set.
 
-`YOUR ANSWER HERE`
+`New Augmentations: GaussianBlur(kernel_size = (3, 3), sigma = (0.1, 5)), RandomPerspective(distortion_scale = 0.3, p = 0.5)`
+
+link: https://wandb.ai/nmep-proj-1/my-awesome-project/runs/s3v8uixz
+
+`New Augmentations: RandomRotation()`
+
+link https://wandb.ai/nmep-proj-1/my-awesome-project/runs/a94q2dp7: 
 
 ## 5.6 (optional) Play around with more hyperparameters. I recommend playing around with the optimizer (Adam, SGD, RMSProp, etc), learning rate scheduler (constant, StepLR, ReduceLROnPlateau, etc), weight decay, dropout, activation functions (ReLU, Leaky ReLU, GELU, Swish, etc), etc.
 
@@ -284,7 +327,9 @@ You only need to observe the training for ~ 5 epochs to average out the noise in
 
 In `models/models.py`, we provided some skelly/guiding comments to implement ResNet. Implement it and train it on CIFAR10. Report training and validation curves, hyperparameters, best validation accuracy, and training time as compared to AlexNet. 
 
-`YOUR ANSWER HERE`
+link: https://wandb.ai/nmep-proj-1/my-awesome-project/runs/wunzgn2o
+
+MEDIUM IMAGENEY KAGGLE RUN1:https://wandb.ai/nmep-proj-1/my-awesome-project/runs/z9rl4ebk
 
 ## 6.1 Visualize examples
 

@@ -21,7 +21,7 @@ from models import build_model
 from optimizer import build_optimizer
 from utils import create_logger, load_checkpoint, save_checkpoint
 
-# CUDA_VISIBLE_DEVICES=0 python main.py --cfg=configs/alexnet_base.yaml
+# CUDA_VISIBLE_DEVICES=4 python main.py --cfg=configs/alexnet_base.yaml
 
 def parse_option():
     parser = argparse.ArgumentParser("Vision model training and evaluation script", add_help=False)

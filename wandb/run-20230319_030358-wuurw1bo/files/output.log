@@ -1,0 +1,39 @@
+
+Traceback (most recent call last):
+  File "/home/tonydeleon/sp23-nmep-hw1/main.py", line 269, in <module>
+    main(config)
+  File "/home/tonydeleon/sp23-nmep-hw1/main.py", line 105, in main
+    train_acc1, train_loss = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
+  File "/home/tonydeleon/sp23-nmep-hw1/main.py", line 151, in train_one_epoch
+    for idx, (samples, targets) in enumerate(tqdm(data_loader, leave=False)):
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/tqdm/std.py", line 1195, in __iter__
+    for obj in iterable:
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 681, in __next__
+    data = self._next_data()
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1376, in _next_data
+    return self._process_data(data)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1402, in _process_data
+    data.reraise()
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/_utils.py", line 461, in reraise
+    raise exception
+TypeError: Caught TypeError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/_utils/worker.py", line 302, in _worker_loop
+    data = fetcher.fetch(index)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 49, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 49, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/tonydeleon/sp23-nmep-hw1/data/datasets.py", line 110, in __getitem__
+    image = self.transform(image)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torchvision/transforms/transforms.py", line 94, in __call__
+    img = t(img)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torchvision/transforms/transforms.py", line 1919, in forward
+    return F.posterize(img, self.bits)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torchvision/transforms/functional.py", line 1399, in posterize
+    return F_t.posterize(img, bits)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torchvision/transforms/functional_tensor.py", line 813, in posterize
+    raise TypeError(f"Only torch.uint8 image tensors are supported, but found {img.dtype}")
+TypeError: Only torch.uint8 image tensors are supported, but found torch.float32

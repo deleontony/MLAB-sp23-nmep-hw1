@@ -5,6 +5,7 @@ import torch
 from PIL import Image, ImageFile
 from torch.utils.data import Dataset, Subset
 from torchvision import transforms
+from torchvision.transforms import GaussianBlur, RandomPerspective, RandomRotation
 from torchvision.datasets import CIFAR10, ImageFolder
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -120,6 +121,11 @@ class CIFAR10Dataset(Dataset):
                 transforms.ToTensor(),
                 transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
                 transforms.Resize([self.img_size] * 2),
+                # new augmentations for question 5.5:
+                transforms.GaussianBlur(kernel_size = (3, 3), sigma = (0.1, 5)),
+                transforms.RandomPerspective(distortion_scale = 0.3, p = 0.5)
+                # other tranformation 5.5:
+                #transforms.RandomRotation(degrees=(0, 180))
             ]
         else:
             transform = [

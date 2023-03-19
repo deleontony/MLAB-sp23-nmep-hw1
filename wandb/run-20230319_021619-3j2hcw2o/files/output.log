@@ -1,0 +1,23 @@
+
+Traceback (most recent call last):
+  File "/home/tonydeleon/sp23-nmep-hw1/main.py", line 269, in <module>
+    main(config)
+  File "/home/tonydeleon/sp23-nmep-hw1/main.py", line 105, in main
+    train_acc1, train_loss = train_one_epoch(config, model, criterion, data_loader_train, optimizer, epoch)
+  File "/home/tonydeleon/sp23-nmep-hw1/main.py", line 156, in train_one_epoch
+    outputs = model(samples)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/tonydeleon/sp23-nmep-hw1/models/alexnet.py", line 40, in forward
+    out = self.lin(x)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/container.py", line 139, in forward
+    input = module(input)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/modules/dropout.py", line 58, in forward
+    return F.dropout(input, self.p, self.training, self.inplace)
+  File "/home/tonydeleon/miniconda3/envs/vision-zoo/lib/python3.10/site-packages/torch/nn/functional.py", line 1252, in dropout
+    return _VF.dropout_(input, p, training) if inplace else _VF.dropout(input, p, training)
+RuntimeError: CUDA out of memory. Tried to allocate 1.12 GiB (GPU 0; 10.76 GiB total capacity; 9.42 GiB already allocated; 21.81 MiB free; 9.72 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
