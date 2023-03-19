@@ -64,7 +64,7 @@ Read through `README.md` and follow the steps to understand how the repo is stru
 
 Be sure to include the 4 main functions in it (`main`, `train_one_epoch`, `validate`, `evaluate`) and how they interact with each other. Also explain where the other files are used. No need to dive too deep into any part of the code for now, the following parts will do deeper dives into each part of the code. For now, read the code just enough to understand how the pieces come together, not necessarily the specifics. You can use any tool to create the diagram (e.g. just explain it in nice markdown, draw it on paper and take a picture, use draw.io, excalidraw, etc.)
 
-https://docs.google.com/presentation/d/1wPU1kUYGKkNNqx_FRUC4Uom-WtxJkIAEZXCVe-FaHG4/edit?usp=sharing
+`https://docs.google.com/presentation/d/1wPU1kUYGKkNNqx_FRUC4Uom-WtxJkIAEZXCVe-FaHG4/edit?usp=sharing`
 
 
 
@@ -145,35 +145,35 @@ The following questions relate to `models/build.py` and `models/models.py`.
 
 ## How many layers does our implementation of LeNet have? How many parameters does it have? (hint: to count the number of parameters, you might want to run the code)
 
-`YOUR ANSWER HERE`
+`There are 11 layers and 99.38k parameters`
 
 
 
-# Part 3: Training
+# Part 3: Training 
 
 The following questions relate to `main.py`, and the configs in `configs/`.
 
 ## 3.0 What configs have we provided for you? What models and datasets do they train on?
 
-The provided configs are "lenet_base.yaml", "resnet18_base.yaml", and "resnet18_medium_imagenet.yaml". They train on the cifar10, cifar10, and medium_imagenet data sets respectively.
+`The provided configs are "lenet_base.yaml", "resnet18_base.yaml", and "resnet18_medium_imagenet.yaml". They train on the cifar10, cifar10, and medium_imagenet data sets respectively.`
 
 ## 3.1 Open `main.py` and go through `main()`. In bullet points, explain what the function does.
 
-1. config file -->  3 datasets (dataset_ train/val/test) + 3 data loaders (data_loader_ train/val/test)
-2. sets up correct device
-3. counts parameters and flops and logs them in the millions
-4. defines optimizer and loss function 
-5. If the model has already started training (MODEL.RESUME = True), it checks the validation accuracy. Then , if the model is in eval_mode it ends the program
-6. Starts a timer and the training loop for each epoch from start to total epochs. In each epoch it:
-* it calls train_one_epoch --> train_acc1 and train_loss and logs it
-*  calls validate --> val_acc1 and val_loss and logs it
-* saves if the 
+`1. config file -->  3 datasets (dataset_ train/val/test) + 3 data loaders (data_loader_ train/val/test)`
+`2. sets up correct device`
+`3. counts parameters and flops and logs them in the millions`
+`4. defines optimizer and loss function`
+`5. If the model has already started training (MODEL.RESUME = True), it checks the validation accuracy. Then , if the` `model is in eval_mode it ends the program`
+`6. Starts a timer and the training loop for each epoch from start to total epochs. In each epoch it:`
+`* it calls train_one_epoch --> train_acc1 and train_loss and logs it`
+`*  calls validate --> val_acc1 and val_loss and logs it`
+`* saves if the`
 
 
 ## 3.2 Go through `validate()` and `evaluate()`. What do they do? How are they different? 
 > Could we have done better by reusing code? Yes. Yes we could have but we didn't... sorry...
 
-`YOUR ANSWER HERE`
+`validate() defines a loss function and then uses a dataloader to load the images. The model then computes the output. evaluate() returns predictions and is used for prediction of the actual model.`
 
 
 # Part 4: AlexNet
@@ -204,10 +204,11 @@ Linear with num_classes output units
 ## 4.1 How many parameters does AlexNet have? How does it compare to LeNet? With the same batch size, how much memory do LeNet and AlexNet take up while training? 
 > (hint: use `gpuststat`)
 
-AlexNet parameters: 
-LeNet Parameters:
+`AlexNet parameters: 57.82M parameters`
 
-They both take _____ memory while trainig
+`LeNet Parameters: 0.099276 M parameters`
+
+`AlexNet takes 1188 MB of memory while training with the same batch size while LeNet takes in 1124 MB of memory` 
 
 ## 4.2 Train AlexNet on CIFAR10. What accuracy do you get?
 
@@ -216,7 +217,7 @@ Report training and validation accuracy on AlexNet and LeNet. Report hyperparame
 > You can just copy the config file, don't need to write it all out again.
 > Also no need to tune the models much, you'll do it in the next part.
 
-`YOUR ANSWER HERE`
+`The validation accuracy of AlexNet is 66.31% max accuracy with a loss of 0.954. The training accuracy AledNet is 65.610 with a loss of 0.969. For LeNet the epoch with the max accuracy had a  validation accuracy is 38.72% with a loss of 1.698 and the training accuracy is 36.136 with a loss of 1.722`
 
 
 
@@ -234,11 +235,29 @@ Report training and validation accuracy on AlexNet and LeNet. Report hyperparame
 
 ## 5.1 Plot the training and validation accuracy and loss curves for AlexNet and LeNet. Attach the plot and any observations you have below.
 
-`YOUR ANSWER HERE`
+`AlexNet`
+`Run summary:`
+`wandb: train accuracy 65.524`
+`wandb:     train loss 0.96615`
+`wandb:   val accuracy 65.62`
+`wandb:       val loss 0.9686`
+
+Lenet
+Run summary:
+wandb: train accuracy 65.772
+wandb:     train loss 0.96369
+wandb:   val accuracy 66.58
+wandb:       val loss 0.96188
+
+`LeNet: https://wandb.ai/nmep-proj-1/my-awesome-project/runs/4c03i9h7`
+`AlexNet: https://wandb.ai/nmep-proj-1/my-awesome-project/runs/vt7xodxl`
 
 ## 5.2 For just AlexNet, vary the learning rate by factors of 3ish or 10 (ie if it's 3e-4 also try 1e-4, 1e-3, 3e-3, etc) and plot all the loss plots on the same graph. What do you observe? What is the best learning rate? Try at least 4 different learning rates.
 
-`YOUR ANSWER HERE`
+`1e-4:  https://wandb.ai/nmep-proj-1/my-awesome-project/runs/uzrkqj11`
+`3e-4: https://wandb.ai/nmep-proj-1/my-awesome-project/runs/vt7xodxl`
+`1e-3: https://wandb.ai/nmep-proj-1/my-awesome-project/runs/i0al5j51`
+`3e-3: https://wandb.ai/nmep-proj-1/my-awesome-project/runs/vbuqa4is`
 
 ## 5.3 Do the same with batch size, keeping learning rate and everything else fixed. Ideally the batch size should be a power of 2, but try some odd batch sizes as well. What do you observe? Record training times and loss/accuracy plots for each batch size (should be easy with W&B). Try at least 4 different batch sizes.
 
