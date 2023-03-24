@@ -333,6 +333,8 @@ MEDIUM IMAGENEY KAGGLE RUN1:https://wandb.ai/nmep-proj-1/my-awesome-project/runs
 
 https://wandb.ai/nmep-proj-1/my-awesome-project/runs/xg6vvl7g
 
+https://wandb.ai/nmep-proj-1/my-awesome-project/runs/myltbp36
+
 
 ## 6.1 Visualize examples
 

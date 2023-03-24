@@ -1,6 +1,6 @@
 BASE: ['resnet18_base.yaml']
 DATA:
-  BATCH_SIZE: 2048
+  BATCH_SIZE: 1024
   DATASET: "medium_imagenet"
   IMG_SIZE: 32
   NUM_WORKERS: 32
